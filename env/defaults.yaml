@@ -1,0 +1,15 @@
+cmat:
+coldata:
+compar:
+outdir:
+organism: "mouse"
+fPrefix: ""
+rm_samples: ""
+geneFilt: "avgCond_100"
+DESeq2_padj: 0.1
+DESeq2_absLog2FC: 0
+ORA_padj: 0.1
+GSEA_padj: 0.01
+avg_pair_overl: 70
+egoS_maxCores: 10
+style: ""

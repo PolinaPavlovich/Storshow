@@ -1,0 +1,181 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import sys
+import yaml
+import snakemake
+
+def parse_args(defaults = {"organism":"mouse",
+                           "fPrefix":"",
+                           "rm_samples":"",
+                           "geneFilt":"avgCond_100",
+                           "DESeq2_padj":0.1,
+                           "DESeq2_absLog2FC":0,
+                           "ORA_padj":0.1,
+                           "GSEA_padj":0.01,
+                           "avg_pair_overl":70,
+                           "egoS_maxCores":10,
+                           "style":""}):
+    parser = argparse.ArgumentParser(prog=sys.argv[0],
+                                     description = "StorShow workflow")
+    parser.add_argument("cmat",
+                        metavar = "cmat",
+                        help="Provide path to input count matrix.")
+    
+    parser.add_argument("coldata",
+                        metavar = "coldata",
+                        help="Provide path to the tsv with coldata." )
+    
+    parser.add_argument("compar",
+                        metavar = "compar",
+                        help="Provide a tsv with pairs to compare. First column is Ctr, second is Treated." )
+    
+    parser.add_argument("outdir",
+                        metavar = "outdir",
+                        help="Provide an output directory." )
+    
+    parser.add_argument("--organism",
+                        metavar = "organism",
+                        default = defaults["organism"],
+                        help="Provide an organism. Either human, mouse or fly. Defaults to mouse.")
+    
+    parser.add_argument("--fPrefix",
+                        metavar = "fPrefix",
+                        default = defaults["fPrefix"],
+                        help="String to prepend in output file names. It is usually an experiment name.")
+    
+    parser.add_argument("--rm_samples",
+                        metavar = "rm_samples",
+                        default = defaults["rm_samples"],
+                        help="A string with samples to exclude, e.g. 'sampleA,sampleB,sampleC'.")
+    
+    parser.add_argument("--geneFilt",
+                        metavar = "geneFilt",
+                        default = defaults["geneFilt"],
+                        help="A criterion to filter genes in a format 'criterion_threshold,' "
+                             "where the 'criterion' can be either 'avgCond' or 'total,' and 'threshold' is a positive integer. "
+                             "For example, for keeping genes with more than 100 reads per condition on average, specify 'avgCond_100'. "
+                             "Or for keeping genes with more than 10 reads per gene specify 'total_10'.")
+    
+    parser.add_argument("--DESeq2_padj",
+                        metavar = "DESeq2_padj",
+                        default = defaults["DESeq2_padj"],
+                        help="The threshold for padj to select significant differentially expressed genes.")
+    
+    parser.add_argument("--DESeq2_absLog2FC",
+                        metavar = "DESeq2_absLog2FC",
+                        default = defaults["DESeq2_absLog2FC"],
+                        help="The threshold for absolute value of log2FC to select significant differentially expressed genes.")
+    
+    parser.add_argument("--ORA_padj",
+                        metavar = "ORA_padj",
+                        default = defaults["ORA_padj"],
+                        help="P-adjusted threshold for GO term and KEGG pathways enrichment.")
+    
+    parser.add_argument("--GSEA_padj",
+                        metavar = "GSEA_padj",
+                        default = defaults["GSEA_padj"],
+                        help="P-adjusted threshold for FGSEA R package.")
+    
+    parser.add_argument("--avg_pair_overl",
+                        metavar = "avg_pair_overl",
+                        default = defaults["avg_pair_overl"],
+                        help="A percentage of genes that overlap in two significant gene sets to assign them to one family.")
+    
+    parser.add_argument("--egoS_maxCores",
+                        metavar = "egoS_maxCores",
+                        default = defaults["egoS_maxCores"],
+                        help="The maximum number of cores to calculate GO term enrichment. Usually, if it is equal to the number of "
+                             "comparisons, then the calculations of this step would take 3-5 minutes.")
+    
+    parser.add_argument("--style",
+                        metavar = "style",
+                        default = defaults["style"],
+                        help="A path to a file containing data frame with one or two columns. The first column, called 'levels', specifies conditions "
+                             "from the most untreated to the most treated. It will allow paired bar plots to have a control "
+                             "condition always on the left and treated on the right side. The second column, called 'colors', "
+                             "is the corresponding colors. If absent, the order of conditions and the colors will be assigned automatically.")
+
+    return parser 
+
+def main():
+    # Parse yaml input.
+    homedir = os.path.dirname(os.path.realpath(__file__))
+    defaults = os.path.join(homedir, "env/defaults.yaml")
+    with open(defaults) as f:
+        commvar = yaml.safe_load(f)
+
+    parser = parse_args()
+    args = parser.parse_args()
+    
+    # Quick sanity check for input.
+    if not os.path.exists(args.cmat):
+        sys.exit("Can't find input matrix. Recheck input")
+    commvar['cmat'] = os.path.abspath(args.cmat)
+    
+    # For coldata
+    if not os.path.exists(args.coldata):
+        sys.exit("Can't find coldata data frame. Recheck input")
+    commvar['coldata'] = os.path.abspath(args.coldata)
+    
+    # For comparisons
+    if not os.path.exists(args.compar):
+        sys.exit("Can't find comparisons data frame. Recheck input")
+    commvar['compar'] = os.path.abspath(args.compar)
+    
+    if not os.path.exists(args.outdir):
+        os.mkdir(os.path.abspath(args.outdir))
+    commvar['outdir'] = os.path.abspath(args.outdir)
+    
+    # overwrite organism
+    commvar['organism'] = args.organism
+    
+    # overwrite output file prefix
+    commvar['fPrefix'] = args.fPrefix
+    
+    # overwrite rm_samples
+    commvar['rm_samples'] = args.rm_samples
+    
+    # overwrite geneFilt
+    commvar['geneFilt'] = args.geneFilt
+    
+    # overwrite DESeq2_padj
+    commvar['DESeq2_padj'] = args.DESeq2_padj
+    
+    # overwrite DESeq2_absLog2FC
+    commvar['DESeq2_absLog2FC'] = args.DESeq2_absLog2FC
+    
+    # overwrite ORA_padj
+    commvar['ORA_padj'] = args.ORA_padj
+    
+    # overwrite GSEA_padj
+    commvar['GSEA_padj'] = args.GSEA_padj
+    
+    # overwrite avg_pair_overl
+    commvar['avg_pair_overl'] = args.avg_pair_overl
+    
+    # overwrite egoS_maxCores
+    commvar['egoS_maxCores'] = args.egoS_maxCores
+    
+    # overwrite style
+    commvar['style'] = os.path.abspath(args.style)
+    
+    with open(os.path.abspath(args.outdir) + '/defaults.yaml', "w") as f:
+        yaml.dump(commvar, f)
+    #Create snake cmd
+    snakecmd = """
+        snakemake --dag --cores 1 -s {snakefile} --jobs 1 --configfile {configfile} | dot -Tsvg > {dagfile}
+        """.format(snakefile = os.path.join(homedir, "Snakefile"), configfile = os.path.abspath(args.outdir) + "/defaults.yaml", 
+            dagfile = os.path.abspath(args.outdir) + "/dag.svg").split()
+    snakefile = os.path.join(homedir, "Snakefile")
+    paramsfile = str(args.outdir + "/defaults.yaml")
+    status = snakemake.snakemake(snakefile, config=commvar,
+                                 printshellcmds=True)
+
+    if status: # translate "success" into shell exit code of 0
+       return 0
+    return 1
+
+if __name__ == "__main__":
+    main()
