@@ -8,3 +8,7 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 4) Run
 *python storshow_dir/Storshow -c input/counts.tsv --coldata input/coldata.tsv --compar input/ctr_treat.tsv --style input/style.tsv -o outputdir*
 
+### Command line options
+
+[-h] [--organism organism] [--fPrefix prefix] [
+
