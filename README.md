@@ -24,10 +24,10 @@ Storshow workflow
 
 #### positional arguments:
 
-cmat    Provide path to an input count matrix.
-coldata Provide path to the tsv with coldata.
-compar  Provide a tsv with pairs to compare. First column is Ctr, second is Treated.
-outdir  Provide an output directory.
+*cmat*    Provide path to an input count matrix.
+*coldata* Provide path to the tsv with coldata.
+*compar*  Provide a tsv with pairs to compare. First column is Ctr, second is Treated.
+*outdir*  Provide an output directory.
 
 #### optional arguments:
 
@@ -48,6 +48,7 @@ outdir  Provide an output directory.
                         reads per gene specify 'total_10'.
 
 *--DESeq2_padj DESeq2_padj* The threshold for padj to select significant differentially expressed genes.
+
 *--DESeq2_absLog2FC DESeq2_absLog2FC*
                         The threshold for absolute value of log2FC to select
                         significant differentially expressed genes.
