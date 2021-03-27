@@ -20,11 +20,11 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 
 cmat coldata compar outdir
 
-Storshow workflow
+### Storshow workflow
 
 #### positional arguments:
 
-*cmat*    Provide path to an input count matrix.
+**cmat**    Provide path to an input count matrix.
 
 *coldata* Provide path to the tsv with coldata.
 
