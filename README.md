@@ -6,7 +6,7 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 2) Run conda *env create -f CondaEnv.yaml* to create conda environment
 3) Run *conda activate storshow*
 4) Run
-*python storshow_dir/Storshow input/counts.tsv input/coldata.tsv input/ctr_treat.tsv --style style.tsv outputdir*
+*python storshow_dir/Storshow input/counts.tsv input/coldata.tsv input/ctr_treat.tsv style.tsv outputdir*
 
 ## Command line options
 
@@ -81,6 +81,61 @@ cmat coldata compar outdir
                         conditions and the colors will be assigned
                         automatically.
                         
+### Example cmat
+
+	Ctrl_1	Ctrl_2	Ctrl_3	Treat_1	Treat_2	Treat3	KO_Treat1 KO_Treat2 KO_Treat3
+ 
+ENSMUSG00000000001.4	5709	5103	5516	6370	6342	4926	5319	4880	5177
+
+ENSMUSG00000000003.15	0	3	1	1	2	0	0	0	0
+
+ENSMUSG00000000028.14	1743	2087	1852	2842	2627	2142	1905	2631	2393
+
+ENSMUSG00000000031.15	8	14	16	8	2	0	15	21	3
+
+ENSMUSG00000000037.16	245	298	197	257	290	150	165	163	122
+
+### Example coldata
+
+sampleName	state
+
+Ctrl_1	Ctrl
+
+Ctrl_2	Ctrl
+
+Ctrl_3	Ctrl	
+
+Treat_1	Treat
+
+Treat_2	Treat
+
+Treat_3	Treat
+
+KO_Treat_1	KO_Treat
+
+KO_Treat_2	KO_Treat
+
+KO_Treat_3	KO_Treat
+
+### Example style
+
+levels	colors
+
+Ctrl	#FB9A99
+
+Treat	#A6CEE3
+
+KO_Treat	#B2DF8A
+
+### Example compar
+
+ctr_cond	treat_cond
+
+Ctrl	Treat
+
+Ctrl KO_Treat
+
+Treat KO_Treat
 
                         
 
