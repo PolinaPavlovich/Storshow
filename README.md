@@ -6,7 +6,7 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 2) Run conda *env create -f CondaEnv.yaml* to create conda environment
 3) Run *conda activate storshow*
 4) Run
-*python storshow_dir/Storshow -c input/counts.tsv --coldata input/coldata.tsv --compar input/ctr_treat.tsv --style input/style.tsv -o outputdir*
+*python storshow_dir/Storshow input/counts.tsv input/coldata.tsv input/ctr_treat.tsv --style style.tsv outputdir*
 
 ### Command line options
 
@@ -29,8 +29,22 @@ compar  Provide a tsv with pairs to compare. First column is Ctr, second is Trea
 outdir  Provide an output directory.
 
 optional arguments:
--h, --help            Show this help message and exit
---organism organism   Provide an organism. Either human, mouse or fly. Defaults to mouse.
+-h, --help               Show this help message and exit
+
+--organism organism      Provide an organism. Either human, mouse or fly. Defaults to mouse.
+
+--fPrefix fPrefix        String to prepend in output file names. It is usually an experiment name.
+
+ --rm_samples rm_samples A string with samples to exclude, e.g. 'sampleA,sampleB,sampleC'.
+ 
+ --geneFilt geneFilt     A criterion to filter genes in a format 
+                       'criterion_threshold,' where the 'criterion' can be
+                        either 'avgCond' or 'total,' and 'threshold' is a
+                        positive integer. For example, for keeping genes with
+                        more than 100 reads per condition on average, specify
+                        'avgCond_100'. Or for keeping genes with more than 10
+                        reads per gene specify 'total_10'.
+
 
 
 
