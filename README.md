@@ -1,4 +1,4 @@
-### Storshow
+## Storshow
 
 Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 
@@ -8,7 +8,7 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 4) Run
 *python storshow_dir/Storshow input/counts.tsv input/coldata.tsv input/ctr_treat.tsv --style style.tsv outputdir*
 
-### Command line options
+## Command line options
 
 [-h] [--organism organism] [--fPrefix prefix] [--rm_samples rm_samples] [--geneFilt geneFilt]
 
@@ -20,9 +20,9 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 
 cmat coldata compar outdir
 
-### Storshow workflow
+## Storshow workflow
 
-#### positional arguments:
+### Positional arguments:
 
 **cmat**    Provide path to an input count matrix.
 
@@ -32,7 +32,7 @@ cmat coldata compar outdir
 
 **outdir**  Provide an output directory.
 
-#### optional arguments:
+### Optional arguments:
 
 **-h, --help**                Show this help message and exit
 
