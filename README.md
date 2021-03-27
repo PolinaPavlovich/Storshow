@@ -81,7 +81,7 @@ cmat coldata compar outdir
                         conditions and the colors will be assigned
                         automatically.
                         
-### Example cmat
+### Example cmat counts.tsv (sep = "\t")
 
 	Ctrl_1	Ctrl_2	Ctrl_3	Treat_1	Treat_2	Treat3	KO_Treat1 KO_Treat2 KO_Treat3
  
@@ -95,7 +95,7 @@ ENSMUSG00000000031.15	8	14	16	8	2	0	15	21	3
 
 ENSMUSG00000000037.16	245	298	197	257	290	150	165	163	122
 
-### Example coldata
+### Example coldata coldata.tsv (sep = "\t")
 
 sampleName	state
 
@@ -117,7 +117,7 @@ KO_Treat_2	KO_Treat
 
 KO_Treat_3	KO_Treat
 
-### Example style
+### Example style style.tsv (sep = "\t")
 
 levels	colors
 
@@ -127,7 +127,7 @@ Treat	#A6CEE3
 
 KO_Treat	#B2DF8A
 
-### Example compar
+### Example compar ctr_treat.tsv (sep = "\t")
 
 ctr_cond	treat_cond
 
