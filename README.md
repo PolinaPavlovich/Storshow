@@ -11,9 +11,13 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 ### Command line options
 
 [-h] [--organism organism] [--fPrefix prefix] [--rm_samples rm_samples] [--geneFilt geneFilt]
+
 [--DESeq2_padj DESeq2_padj] [--DESeq2_absLog2FC DESeq2_absLog2FC] [--ORA_padj ORA_padj]
+
 [--GSEA_padj GSEA_padj] [--avg_pair_overl avg_pair_overl] [--egoS_maxScores egoS_maxScores]
+
 [--style style]
+
 cmat coldata compar outdir
 
 Storshow workflow
