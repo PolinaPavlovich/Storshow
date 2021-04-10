@@ -81,7 +81,10 @@ cmat coldata compar outdir
                         the corresponding colors. If absent, the order of
                         conditions and the colors will be assigned
                         automatically.
-                        
+ 
+## Example data
+Example data can be found here https://github.com/PolinaPavlovich/Storshow_input_example
+
 ### Example cmat counts.tsv (sep = "\t")
 
 	Ctrl_1	Ctrl_2	Ctrl_3	Treat_1	Treat_2	Treat3	KO_Treat1 KO_Treat2 KO_Treat3
