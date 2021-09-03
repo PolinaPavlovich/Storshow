@@ -5,7 +5,7 @@ Storshow takes a count matrix of bulk RNA-seq and returns a Shiny app
 1) Clone Storshow directory from GitHub to storshow_dir
 2) Run conda *env create -f CondaEnv.yaml* to create conda environment
 3) Run *conda activate storshow*
-4) Put input files in the *input* folder (see example in )
+4) Put input files in the *input* folder (see example in https://github.com/PolinaPavlovich/Storshow_input_example)
 5) Run
 *python storshow_dir/Storshow input/counts.tsv input/coldata.tsv input/ctr_treat.tsv style.tsv outputdir*
 
